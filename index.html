@@ -1,0 +1,78 @@
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arthur Mougin</title>
+    <meta name="description" content="Portfolio live d'Arthur Mougin">
+    <style>
+        body {
+            margin:0;
+            padding:0;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+
+        }
+        #preload {
+            position: absolute;
+            width: 100vw;
+            background-color: white;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div id="preload">
+        <h1>Portfolio social d'Arthur Mougin</h1>
+        <a href="http://bit.ly/2klnosi">Si vous préférez en savoir plus avant de me rencontrer, voici mon linkedin.</a>
+        <p id="message">Chargement en cours</p>
+    </div>
+    <iframe id="MyIframe" title="webXR Meeting Room with Arthur Mougin" src="https://hubs.mozilla.com/mR9fW5d/am-room/?embed_token=96da31a386c1a7e875a4fc526880f6f2" allow="microphone; camera; vr; speaker;" allowfullscreen="true"></iframe>
+    <script>
+        //variables
+        var delay = 800;
+        var index = 0;
+        var messages = [
+            "Chargement en cours",
+            "Chargement en cours.",
+            "Chargement en cours..",
+            "La room sociale est prête, clickez n'importe ou pour accéder à la salle de réunion! Je vous rejoindrais en fonction de mes disponibilités."
+        ];
+        var messageHolder = document.getElementById("message");
+        var preloader = document.getElementById("preload");
+
+        //functions
+        function setMessage(i){
+            messageHolder.innerText = messages[i]
+        }
+        function setloopingNextMessage(){
+            index = ++index % 3;
+            setMessage(index);
+        }
+        function wait1sec(){
+            setTimeout(()=>{
+                clearInterval(clock);
+                setMessage(3);
+                preloader.addEventListener("click",hideAndRemoveListener);
+            },1000)
+        }
+        function hideAndRemoveListener(){
+            console.log("click");
+            preloader.removeEventListener("click",hideAndRemoveListener);
+            preloader.style.display = "none";
+        }
+
+        //Lets goo
+        const clock = setInterval(setloopingNextMessage,delay)
+        document.getElementById("MyIframe").addEventListener("load",wait1sec);
+    </script>
+</body>
+</html>
+
